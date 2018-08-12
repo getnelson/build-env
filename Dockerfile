@@ -45,7 +45,7 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
 # install java
 RUN add-apt-repository ppa:openjdk-r/ppa && \
     apt-get update && \
-    apt-get install openjdk-8-jdk && \
+    apt-get install -y openjdk-8-jdk && \
     update-alternatives --config java && \
     java -version
 
