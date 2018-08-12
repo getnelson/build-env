@@ -13,7 +13,8 @@ RUN apt-get update && \
     sudo \
     wget \
     curl \
-    software-properties-common
+    software-properties-common \
+    git
 
 # install promtool
 RUN wget https://raw.githubusercontent.com/getnelson/nelson/master/bin/install-promtool -O /tmp/install-promtool && \
