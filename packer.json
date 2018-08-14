@@ -1,0 +1,25 @@
+{
+    "variables": {
+        "api_key": "{{ env `DIGITAL_OCEAN_API_TOKEN` }}"
+    },
+    "builders": [
+        {
+          "type": "digitalocean",
+          "api_token": "{{ user `api_key` }}",
+          "image": "ubuntu-16-04-x64",
+          "region": "sfo2",
+          "size": "512mb",
+          "ssh_username": "root",
+          "snapshot_name": "buildkite-{{ timestamp }}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": [
+                "{{pwd}}/scripts/docker.sh",
+                "{{pwd}}/scripts/buildkite.sh"
+            ]
+        }
+    ]
+}
