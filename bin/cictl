@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -lt 1 ]; then
+	echo "Usage:"
+	echo "cictl -on"
+	echo "cictl -off"
+	exit 1;
+fi
+
+DROPLET_NAME="buildkite-worker"
+
+function get_image_id(){
+	doctl compute image list | tail +2 | sort -r -k1 | grep -m1 buildkite | awk '{print $1}'
+}
+
+function get_ssh_key_id(){
+	doctl compute ssh-key list | tail +2 | sort -r -k1 | grep -m1 deployment | awk '{print $1}'
+}
+
+function ci_start(){
+	echo "==>> starting...."
+	local image_id=$(get_image_id)
+	local ssh_key=$(get_ssh_key_id)
+
+	doctl compute droplet create \
+	--region sfo2 \
+	--size s-2vcpu-4gb \
+	--image "${image_id}" \
+	--ssh-keys "${ssh_key}" \
+	"${DROPLET_NAME}"
+}
+
+function ci_stop(){
+	echo "==>> stopping...."
+	doctl compute droplet delete "${DROPLET_NAME}"
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -on) ci_start; shift 2;;
+    -off) ci_stop; shift 2;;
+    -*) echo "unknown option: $1" >&2; exit 1;;
+    *) die "unrecognized argument: $1"; shift 1;;
+  esac
+done
