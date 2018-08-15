@@ -30,7 +30,7 @@
         {
           "type": "shell",
           "inline": [
-            "sudo usermod -aG docker buildkite-agent"
+            "usermod -aG docker buildkite-agent"
           ]
         }
     ]

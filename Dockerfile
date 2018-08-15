@@ -20,10 +20,10 @@ COPY scripts /scripts/
 
 RUN /scripts/hugo.sh
 RUN /scripts/promtool.sh
-RUN /scripts/docker.sh
 RUN /scripts/java.sh
 RUN /scripts/sbt.sh
 RUN /scripts/user.sh "${BUILD_USER}"
+RUN /scripts/docker.sh && usermod -aG docker "${BUILD_USER}"
 RUN rm -rf /scripts && \
 	rm -rf /tmp/* && \
 	apt-get clean
