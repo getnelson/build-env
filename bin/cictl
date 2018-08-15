@@ -19,8 +19,18 @@ function get_ssh_key_id(){
 	doctl compute ssh-key list | tail +2 | sort -r -k1 | grep -m1 deployment | awk '{print $1}'
 }
 
+function check_for_existance(){
+	local found=$(doctl compute droplet list | tail +2 | sort -r -k1 | grep -m1 "${DROPLET_NAME}" | awk '{print $1}')
+	if [ -n "$found" ]; then
+		echo "==>> already running droplet ${found} as ${DROPLET_NAME}"
+		exit 0;
+	fi
+}
+
 function ci_start(){
-	echo "==>> starting...."
+	check_for_existance
+
+	echo "==>> no existing worker found, starting a new one...."
 	local image_id=$(get_image_id)
 	local ssh_key=$(get_ssh_key_id)
 
