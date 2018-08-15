@@ -18,8 +18,20 @@
             "type": "shell",
             "scripts": [
                 "{{pwd}}/scripts/docker.sh",
-                "{{pwd}}/scripts/buildkite.sh"
+                "{{pwd}}/scripts/buildkite.sh",
+                "{{pwd}}/scripts/ansible.sh"
             ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_file": "local.yml",
+            "clean_staging_directory": true
+        },
+        {
+          "type": "shell",
+          "inline": [
+            "sudo usermod -aG docker buildkite-agent"
+          ]
         }
     ]
 }

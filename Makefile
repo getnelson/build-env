@@ -1,7 +1,9 @@
 
 IMAGE_TAG?=unstable
 
-all:
+all: buildkite container
+
+container:
 	docker build -t getnelson/build-env:$(IMAGE_TAG) $(PWD)
 
 buildkite:

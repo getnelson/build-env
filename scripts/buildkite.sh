@@ -11,3 +11,7 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 32A37959C2FA5C
 apt-get update
 
 apt-get install -y buildkite-agent
+
+systemctl daemon-reload
+
+systemctl enable buildkite-agent
