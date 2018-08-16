@@ -36,7 +36,7 @@ function ci_start(){
 
 	doctl compute droplet create \
 	--region sfo2 \
-	--size s-2vcpu-4gb \
+	--size s-4vcpu-8gb \
 	--image "${image_id}" \
 	--ssh-keys "${ssh_key}" \
 	"${DROPLET_NAME}"
