@@ -18,6 +18,7 @@
             "type": "shell",
             "scripts": [
                 "{{pwd}}/scripts/docker.sh",
+                "{{pwd}}/scripts/docker-tcp.sh",
                 "{{pwd}}/scripts/buildkite.sh",
                 "{{pwd}}/scripts/ansible.sh"
             ]

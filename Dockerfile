@@ -14,7 +14,9 @@ RUN apt-get update && \
     wget \
     curl \
     software-properties-common \
-    git
+    git \
+    telnet \
+    iproute2
 
 COPY scripts /scripts/
 
