@@ -20,6 +20,7 @@ RUN apt-get update && \
 
 COPY scripts /scripts/
 
+RUN /scripts/digitalocean.sh
 RUN /scripts/hugo.sh
 RUN /scripts/promtool.sh
 RUN /scripts/java.sh
