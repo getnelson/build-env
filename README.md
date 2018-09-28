@@ -17,5 +17,5 @@ make container
 To build the OS image:
 
 ```
-make buildkite
+make droplet
 ```

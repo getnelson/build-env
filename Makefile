@@ -6,7 +6,7 @@ all: buildkite container
 container:
 	docker build -t getnelson/build-env:$(IMAGE_TAG) $(PWD)
 
-buildkite:
+droplet:
 	packer build -on-error=cleanup packer.json
 
 encrypt:

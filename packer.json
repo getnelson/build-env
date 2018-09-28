@@ -17,10 +17,16 @@
         {
             "type": "shell",
             "scripts": [
+                "{{pwd}}/scripts/base.sh",
                 "{{pwd}}/scripts/docker.sh",
                 "{{pwd}}/scripts/docker-tcp.sh",
                 "{{pwd}}/scripts/buildkite.sh",
-                "{{pwd}}/scripts/ansible.sh"
+                "{{pwd}}/scripts/ansible.sh",
+                "{{pwd}}/scripts/digitalocean.sh",
+                "{{pwd}}/scripts/hugo.sh",
+                "{{pwd}}/scripts/promtool.sh",
+                "{{pwd}}/scripts/java.sh",
+                "{{pwd}}/scripts/sbt.sh"
             ]
         },
         {

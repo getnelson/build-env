@@ -5,21 +5,10 @@ MAINTAINER Nelson Team <team@getnelson.io>
 ENV DEBIAN_FRONTEND noninteractive
 ENV BUILD_USER builder
 
-# install a bunch of internet boilerplate
-RUN apt-get update && \
-    apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    sudo \
-    wget \
-    curl \
-    software-properties-common \
-    git \
-    telnet \
-    iproute2
-
 COPY scripts /scripts/
 
+# install a bunch of internet boilerplate
+RUN /scripts/base.sh
 RUN /scripts/digitalocean.sh
 RUN /scripts/hugo.sh
 RUN /scripts/promtool.sh
