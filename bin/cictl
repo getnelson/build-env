@@ -20,36 +20,42 @@ function get_ssh_key_id(){
 }
 
 function check_for_existance(){
-	local found=$(doctl compute droplet list | tail +2 | sort -r -k1 | grep -m1 "${DROPLET_NAME}" | awk '{print $1}')
-	if [ -n "$found" ]; then
-		echo "==>> already running droplet ${found} as ${DROPLET_NAME}"
+	local found=$(doctl compute droplet list | tail +2 | sort -r -k1 | grep "buildkite-worker" | wc -l | awk '{print $1}')
+	if [ "$found" != 0 ]; then
+		echo "==>> already running droplet ${found}"
 		exit 0;
 	fi
 }
 
 function ci_start(){
+  total_drops="$1"
 	check_for_existance
 
-	echo "==>> no existing worker found, starting a new one...."
+	echo "==>> no existing worker found, starting ${total_drops} new one(s)...."
 	local image_id=$(get_image_id)
 	local ssh_key=$(get_ssh_key_id)
 
-	doctl compute droplet create \
-	--region sfo2 \
-	--size s-4vcpu-8gb \
-	--image "${image_id}" \
-	--ssh-keys "${ssh_key}" \
-	"${DROPLET_NAME}"
+  for i in $(seq 1 "${total_drops}"); do
+    doctl compute droplet create \
+    --region sfo2 \
+    --size s-4vcpu-8gb \
+    --image "${image_id}" \
+    --ssh-keys "${ssh_key}" \
+    "${DROPLET_NAME}-${i}"
+  done
 }
 
 function ci_stop(){
 	echo "==>> stopping...."
-	doctl compute droplet delete "${DROPLET_NAME}"
+	doctl compute droplet list | tail +2 | sort -r -k1 | grep "buildkite-worker" | awk '{print $1}' | xargs -L1 doctl compute droplet delete -f
 }
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
-    -on) ci_start; shift 2;;
+    -on)
+      machine_count="${2:-1}"
+      ci_start "$machine_count";
+      shift 2;;
     -off) ci_stop; shift 2;;
     -*) echo "unknown option: $1" >&2; exit 1;;
     *) die "unrecognized argument: $1"; shift 1;;
