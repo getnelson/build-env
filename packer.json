@@ -26,7 +26,8 @@
                 "{{pwd}}/scripts/hugo.sh",
                 "{{pwd}}/scripts/promtool.sh",
                 "{{pwd}}/scripts/java.sh",
-                "{{pwd}}/scripts/sbt.sh"
+                "{{pwd}}/scripts/sbt.sh",
+                "{{pwd}}/scripts/nodejs.sh"
             ]
         },
         {
